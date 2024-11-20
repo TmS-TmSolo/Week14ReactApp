@@ -1,12 +1,12 @@
 // src/App.tsx
 
 // It has at least 3 React components
-// A component is a function that returns JSX and components are used like they’re an HTML element
-// main.tsx does not count as a component, it doesn’t have a function that returns JSX
-// It’s displaying the test data
+// A component is a function that returns JSX and components are used like they're an HTML element
+// main.tsx does not count as a component, it doesn't have a function that returns JSX
+// It's displaying the test data
 // You can put your array of data in whatever file you want, or even in its own file
-// It’s using at least 1 prop on your own components
-// A prop is set like it’s an HTML attribute, and received as a destructured parameter property
+// It's using at least 1 prop on your own components
+// A prop is set like it's an HTML attribute, and received as a destructured parameter property
 // key does not count for this, you need to come up with your own prop and practice setting it and receiving it
 // No red errors/warnings in the console in the browser
 // No type errors in VS Code 
@@ -23,9 +23,9 @@ import { testData } from './testdata';
 const initialTodos: Todo[] = testData.map(item => ({
   id: Number(item.id),
   text: item.task,
-  completed: item.completed
+  completed: item.completed,
+  time: undefined
 }));
-
 /**
  * Represents a single to-do item with an ID, text description, and completion status.
  */
@@ -33,6 +33,7 @@ interface Todo {
   id: number;
   text: string;
   completed: boolean;
+  time?: string;
 }
 
 /**
@@ -53,10 +54,11 @@ function App() {
   const addTodo = () => {
     if (newTodo.trim() === '') return;
 
-    const newTodoItem = {
+    const newTodoItem: Todo = {
       id: Date.now(),
       text: newTodo,
       completed: false,
+      time: new Date().toLocaleString()
     };
 
     setTodos([newTodoItem, ...todos]);
@@ -82,6 +84,14 @@ function App() {
     );
   };
 
+  const updateTodo = (id: number, newText: string) => {
+    setTodos((prevTodos: Todo[]) =>
+      prevTodos.map((todo: Todo) =>
+        todo.id === id ? { ...todo, text: newText, time: new Date().toLocaleString() } : todo
+      )
+    );
+  };
+
   return (
     <div className="App">
       <h1>To-Do List</h1>
@@ -92,8 +102,9 @@ function App() {
         placeholder="Add a new task"
       />
       <button onClick={addTodo}>Add</button>
-      <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
+      <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} updateTodo={updateTodo} />
     </div>
   );
 }
+
 export default App;

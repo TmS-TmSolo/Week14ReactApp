@@ -13,6 +13,7 @@ interface TodoItemProps {
     id: number;
     text: string;
     completed: boolean;
+    time?: string;
   };
   toggleTodo: (id: number) => void;
   deleteTodo: (id: number) => void;
@@ -22,6 +23,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo, toggleTodo, deleteTodo
   return (
     <div className={`todo-item ${todo.completed ? 'completed' : ''}`}>
       <h3 onClick={() => toggleTodo(todo.id)}>{todo.text}</h3>
+      {todo.time && <p>{todo.time}</p>}
       <button onClick={() => deleteTodo(todo.id)}>Delete</button>
     </div>
   );

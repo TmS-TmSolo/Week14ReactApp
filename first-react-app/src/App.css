@@ -31,3 +31,14 @@ li {
   text-decoration: line-through;
   color: gray;
 }
+
+.update-item {
+  
+  cursor: pointer;
+  color: rgb(231, 9, 9);
+  border-radius: 4px; 
+  width: 50%;
+  margin: 0 auto;
+  
+
+}
